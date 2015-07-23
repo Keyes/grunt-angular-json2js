@@ -35,10 +35,16 @@ module.exports = function (grunt) {
             moduleName: 'json'
         });
 
-        var TEMPLATE = 'angular.module(\'%s\', []).value(\'%s\', %s);\n';
+        var TEMPLATE_MODULE = 'angular.module(\'%s\', [])';
+        var TEMPLATE_VALUE = '.value(\'%s\', %s)\n';
+        var TEMPLATE_END = ';'
+
 
         // Iterate over all specified file groups.
         this.files.forEach(function (f) {
+
+            var output = [ util.format(TEMPLATE_MODULE, options.moduleName) ];
+
             _.each(f.src, function (sourceFile) {
 
                 if (!grunt.file.exists(sourceFile)) {
@@ -47,12 +53,6 @@ module.exports = function (grunt) {
                 } else {
                     var src = grunt.file.read(sourceFile);
                     var jsonPath = sourceFile;
-
-                    var moduleName = (options.stripPrefix) ?
-                        jsonPath.replace(options.stripPrefix, '') :
-                        jsonPath;
-
-                    moduleName = options.moduleName;
 
                     var valueName = jsonPath.replace(/\.json$/, '');
 
@@ -64,24 +64,30 @@ module.exports = function (grunt) {
                         return letter.toUpperCase();
                     });
 
-                    var outputPath = jsonPath.replace(/\.json$/, '') + '.js';
-                    var output = util.format(TEMPLATE, moduleName, valueName, src);
 
-                    // delete destination if it exists
-                    if (grunt.file.exists(outputPath)) {
-                        grunt.file.delete(outputPath);
-                    }
-                    // Write the destination file.
-
-                    grunt.file.write(outputPath, output);
-
-                    // Print a success message.
-                    grunt.log.writeln('File "' + outputPath + '" created.');
+                    output.push(util.format(TEMPLATE_VALUE, valueName, src));
                 }
 
             });
 
+            output.push(TEMPLATE_END);
+
+            var outputPath = f.dest;
+
+            // delete destination if it exists
+            if (grunt.file.exists(outputPath)) {
+                grunt.file.delete(outputPath);
+            }
+            // Write the destination file.
+
+            grunt.file.write(outputPath, output.join(''));
+
+            // Print a success message.
+            grunt.log.writeln('File "' + outputPath + '" created.');
+
         });
+
+
     });
 
 };
