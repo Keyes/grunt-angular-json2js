@@ -8,7 +8,7 @@
 
 'use strict';
 
-var MODULE_NAME = 'ng_json2js';
+var MODULE_NAME = 'json2js';
 var util = require('util');
 var _ = require('lodash');
 
@@ -31,7 +31,8 @@ module.exports = function (grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             stripPrefix: '',
-            prependPrefix: ''
+            prependPrefix: '',
+            moduleName: 'json'
         });
 
         var TEMPLATE = 'angular.module(\'%s\', []).value(\'%s\', %s);\n';
@@ -51,9 +52,7 @@ module.exports = function (grunt) {
                         jsonPath.replace(options.stripPrefix, '') :
                         jsonPath;
 
-                    moduleName = (options.prependPrefix) ?
-                    options.prependPrefix + moduleName :
-                        moduleName;
+                    moduleName = options.moduleName;
 
                     var valueName = jsonPath.replace(/\.json$/, '');
 
