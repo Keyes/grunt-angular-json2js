@@ -1,5 +1,5 @@
 {
-    "name": "grunt-ng-json2js",
+    "name": "grunt-angular-json2js",
     "description": "Converts json to AngularJS modules for test fixtures",
     "version": "0.1.3",
     "homepage": "https://github.com/mbcooper/grunt-ng-json2js",
