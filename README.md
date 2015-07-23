@@ -3,12 +3,6 @@
 >Grunt task for converting JSON files to [AngularJS](http://angularjs.org/) values.
 
 
-## This is a fork of [karma-ng-json2js-preprocessor] (https://github.com/EE/karma-ng-json2js-preprocessor)
-## see my gulp version [gulp-ng-json2js] (https://github.com/mbcooper/gulp-ng-json2js.git)
-I figured that we had no need to convert data on every karma test run, rather we make it into a
-grunt task that we run when required.
-
-
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 
@@ -24,14 +18,14 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-ng-json2js');
 ```
 
-## The "ng_json2js" task
+## The "json2js" task
 
 ### Overview
 In your project's Gruntfile, add a section named `ng_json2js` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  ng_json2js: {
+  json2js: {
     options: {
             // strip this from the file path
              stripPrefix: 'test/fixture/',
