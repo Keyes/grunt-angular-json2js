@@ -56,6 +56,10 @@ module.exports = function (grunt) {
 
                     var valueName = jsonPath.replace(/\.json$/, '');
 
+                    valueName = (options.stripPrefix) ?
+                        valueName.replace(options.stripPrefix, '') :
+                        valueName;
+
                     valueName = valueName.replace(/(?:-|\/)([a-zA-Z0-9])/g, function (all, letter) {
                         return letter.toUpperCase();
                     });
